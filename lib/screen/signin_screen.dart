@@ -1,12 +1,13 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';//手勢的包
+import 'package:flutter/material.dart';//material的包
+import 'package:fluttertoast/fluttertoast.dart';//吐司的包
 
+//引入客製化widget
 import 'package:flutter_signin_ui_test/widget/toast_widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:flutter_signin_ui_test/widget/button_widget.dart';
 import 'package:flutter_signin_ui_test/widget/textfield_widget.dart';
 
+//statfulWidget 代表有狀態的widget
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
@@ -15,16 +16,16 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final GlobalKey _globalKey = GlobalKey();
 
+  //有controller 才能監控文字
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  //手勢
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
-
-
+  //flutter toast
   late FToast fToast;
 
+  //flutter toast 初始化
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
     fToast.init(context);
   }
 
-
+  //關掉
   @override
   void dispose() {
     // TODO: implement dispose
@@ -53,23 +54,25 @@ class _SignInScreenState extends State<SignInScreen> {
 
   _notOk() {
     fToast.showToast(
-      child: const  ToastWidget(text: "Email or Password is Empty", color: Colors.redAccent, icon: Icons.error),
+      child: const  ToastWidget(
+          text: "Email or Password is Empty",
+          color: Colors.redAccent,
+          icon: Icons.error),
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
     );
   }
 
     bool infIsOk() {
+    // 用.text 獲取輸入的字串
       final String email = emailController.text;
       final String passwd = passwordController.text;
-      if (email.isEmpty && passwd.isEmpty) {
+      //email或password都不能為空
+      if (email.isEmpty || passwd.isEmpty) {
         return false;
       }
       return true;
     }
-
-
-
 
     @override
     Widget build(BuildContext context) {
@@ -79,17 +82,25 @@ class _SignInScreenState extends State<SignInScreen> {
     final heigh = screenSize.height;
 
       return Scaffold(
+        //防止超出大小
         body: SafeArea(
           child: Container(
+            //寬度最大
             width: double.maxFinite,
+            //高度最大
             height: double.maxFinite,
+            //內距
             padding:  EdgeInsets.only(
                 left: width/20,
                 right: width/20),
+            //水平widgets
             child: Column(
+              //主軸
               mainAxisAlignment: MainAxisAlignment.center,
+              //副軸
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                //裝圖片
                 Container(
                   width: 100,
                   height: 100,
@@ -102,11 +113,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
                 //留空裝置高度/14
-                SizedBox(height: MediaQuery
-                    .of(context)
-                    .size
-                    .height / 14,),
-                const Text(
+                SizedBox(height: heigh / 14,),
+                const  Text(
                   'Hello World',
                   style: TextStyle(
                     fontSize: 40,
@@ -174,7 +182,3 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     }
   }
-
-
-
-
