@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';//import MaterialApp的包，使用material
+import 'package:flutter_signin_ui_test/routes/routes.dart';
+import 'package:flutter_signin_ui_test/screen/register_screen.dart';
 
 import 'package:flutter_signin_ui_test/screen/signin_screen.dart';
 
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       //關掉debug圖標
       debugShowCheckedModeBanner: false,
+      //告知路由器是哪個
+      onGenerateRoute: MyRouter.generateRoute,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart'; //手勢的包
 import 'package:flutter/material.dart'; //material的包
+import 'package:flutter_signin_ui_test/screen/loading_screen.dart';
+import 'package:flutter_signin_ui_test/screen/register_screen.dart';
 
 import 'package:fluttertoast/fluttertoast.dart'; //吐司的包
 
@@ -7,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart'; //吐司的包
 import 'package:flutter_signin_ui_test/widget/toast_widget.dart';
 import 'package:flutter_signin_ui_test/widget/button_widget.dart';
 import 'package:flutter_signin_ui_test/widget/textfield_widget.dart';
+import 'package:lottie/lottie.dart';
 
 //statfulWidget 代表有狀態的widget
 class SignInScreen extends StatefulWidget {
@@ -52,6 +55,9 @@ class _SignInScreenState extends State<SignInScreen> {
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
     );
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder:(context)=>const LoadingScreen()));
   }
 
   _notOk() {
@@ -172,7 +178,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                    },
                     child: const Text(
                       "Register now",
                       style: TextStyle(
