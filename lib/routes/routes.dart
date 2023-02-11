@@ -14,7 +14,7 @@ class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.registerScreen:
-        return NoAnimRouteBuilder(const RegisterScreen());
+        return MaterialPageRoute(builder: (_)=>const RegisterScreen());
       case Routes.homeScreen:
         return NoAnimRouteBuilder(const HomeScreen());
       case Routes.loadigScreen:
