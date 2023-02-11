@@ -11,6 +11,8 @@ import 'package:flutter_signin_ui_test/widget/button_widget.dart';
 import 'package:flutter_signin_ui_test/widget/textfield_widget.dart';
 import 'package:lottie/lottie.dart';
 
+import '../routes/routes.dart';
+
 //statfulWidget 代表有狀態的widget
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -55,9 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
     );
-    Navigator.of(context).push(
-        MaterialPageRoute(
-            builder:(context)=>const LoadingScreen()));
+    Navigator.pushNamed(context,Routes.loadigScreen);
   }
 
   _notOk() {
@@ -179,6 +179,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   TextButton(
                     onPressed: () {
+                      Navigator.pushNamed(context, Routes.registerScreen);
                     },
                     child: const Text(
                       "Register now",

@@ -23,7 +23,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     _controller = AnimationController(vsync: this)
     ..addStatusListener((s) {
       if( s == AnimationStatus.completed){
-        Navigator.pushNamed(context,Routes.bbb);
+        Navigator.pushNamed(context,Routes.homeScreen);
       }
     });
     super.initState();
