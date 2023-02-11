@@ -2,7 +2,7 @@
 
 ## 成果
 
-![Sign In Flutter UI]https://user-images.githubusercontent.com/69885352/218260558-d14fbb8b-556c-4424-abc5-6d82703ccbb6.mov
+![Sign In Flutter UI](https://user-images.githubusercontent.com/69885352/218260558-d14fbb8b-556c-4424-abc5-6d82703ccbb6.mov)
 
 
 ## 更新
