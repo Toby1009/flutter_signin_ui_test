@@ -8,7 +8,7 @@ import 'package:flutter_signin_ui_test/screen/register_screen.dart';
 class Routes{
   static const String registerScreen = 'registerScreen';
   static const String homeScreen = 'homeScreen';
-  static const String loadigScreen = 'loadigScreen';
+  static const String loadingScreen = 'loadingScreen';
   static const String testScreen = 'testScreen';
 }
 
@@ -19,7 +19,7 @@ class MyRouter {
         return MaterialPageRoute(builder: (_)=>const RegisterScreen());
       case Routes.homeScreen:
         return NoAnimRouteBuilder(const HomeScreen());
-      case Routes.loadigScreen:
+      case Routes.loadingScreen:
         return NoAnimRouteBuilder(const LoadingScreen());
       default:
         return CupertinoPageRoute(

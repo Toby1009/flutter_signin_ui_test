@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
     );
-    Navigator.pushNamed(context,Routes.loadigScreen);
+    Navigator.pushNamed(context,Routes.loadingScreen);
   }
 
   _notOk() {
