@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_signin_ui_test/screen/home_screen.dart';
 import 'package:flutter_signin_ui_test/screen/loading_screen.dart';
 import 'package:flutter_signin_ui_test/screen/register_screen.dart';
@@ -8,6 +9,7 @@ class Routes{
   static const String registerScreen = 'registerScreen';
   static const String homeScreen = 'homeScreen';
   static const String loadigScreen = 'loadigScreen';
+  static const String testScreen = 'testScreen';
 }
 
 class MyRouter {
@@ -35,9 +37,10 @@ class NoAnimRouteBuilder extends PageRouteBuilder {
 
   NoAnimRouteBuilder(this.page)
       : super(
-      opaque: false,
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionDuration: const Duration(milliseconds: 0),
+      opaque: false, //是否遮擋整個螢幕。
+      pageBuilder: (context, animation, secondaryAnimation) => page,//建立要跳到的頁面。
+      transitionDuration: const Duration(milliseconds: 0),//轉場動畫的持續時間。
       transitionsBuilder:
-          (context, animation, secondaryAnimation, child) => child);
+          (context, animation, secondaryAnimation, child) => child);//自訂的轉場效果。
 }
+
