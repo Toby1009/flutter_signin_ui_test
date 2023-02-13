@@ -48,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  _isOk() {
+  _notEmptyEmailPassword() {
     fToast.showToast(
       child: const ToastWidget(
           text: "Sign In Success",
@@ -60,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
     Navigator.pushNamed(context,Routes.loadingScreen);
   }
 
-  _notOk() {
+  _emptyEmailPassword() {
     fToast.showToast(
       child: const ToastWidget(
           text: "Email or Password is Empty",
@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  bool infIsOk() {
+  bool haveEmailPassword() {
     // 用.text 獲取輸入的字串
     final String email = emailController.text;
     final String passwd = passwordController.text;
@@ -157,10 +157,10 @@ class _SignInScreenState extends State<SignInScreen> {
               //登入按鈕
               InkWell(
                 onTap: (){
-                  if (infIsOk()) {
-                    _isOk();
+                  if (haveEmailPassword()) {
+                    _notEmptyEmailPassword();
                   } else {
-                    _notOk();
+                    _emptyEmailPassword();
                   }
                 },
                   child: const ButtonWidget(text: "Sign In")

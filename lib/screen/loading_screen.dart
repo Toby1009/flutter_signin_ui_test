@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_ui_test/screen/home_screen.dart';
-import 'package:flutter_signin_ui_test/screen/register_screen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../routes/routes.dart';
@@ -15,12 +12,13 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin{
+
    late AnimationController _controller;
 
   @override
   void initState() {
     // TODO: implement initState
-    _controller = AnimationController(vsync: this)
+    _controller = AnimationController(vsync: this)//vsync 會綁定一個動畫計時器到 widge
     ..addStatusListener((s) {
       if( s == AnimationStatus.completed){
         Navigator.pushNamed(context,Routes.homeScreen);
@@ -44,8 +42,8 @@ class _LoadingScreenState extends State<LoadingScreen>
         'assets/loading_animation.json',
         repeat: false,
         controller: _controller,
-        onLoaded: (composition) {
-          _controller
+        onLoaded: (composition) {//composition動畫檔案
+          _controller//對應的 AnimationController
             ..duration = composition.duration
             ..forward();
         }
