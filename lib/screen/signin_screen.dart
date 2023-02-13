@@ -91,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
           height: double.maxFinite,
           //內距
           padding: EdgeInsets.only(left: width / 20, right: width / 20),
-          //水平widgets
+          //垂直widgets
           child: Column(
             //主軸
             mainAxisAlignment: MainAxisAlignment.center,
