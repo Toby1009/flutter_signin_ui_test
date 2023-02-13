@@ -5,13 +5,14 @@ import 'package:flutter_signin_ui_test/screen/home_screen.dart';
 import 'package:flutter_signin_ui_test/screen/loading_screen.dart';
 import 'package:flutter_signin_ui_test/screen/register_screen.dart';
 
+//路
 class Routes{
   static const String registerScreen = 'registerScreen';
   static const String homeScreen = 'homeScreen';
   static const String loadingScreen = 'loadingScreen';
   static const String testScreen = 'testScreen';
 }
-
+//路由器
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -31,7 +32,7 @@ class MyRouter {
     }
   }
 }
-
+//無動畫跳轉
 class NoAnimRouteBuilder extends PageRouteBuilder {
   final Widget page;
 
