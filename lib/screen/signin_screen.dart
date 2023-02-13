@@ -7,7 +7,7 @@ import 'package:flutter_signin_ui_test/widget/toast_widget.dart';
 import 'package:flutter_signin_ui_test/widget/button_widget.dart';
 import 'package:flutter_signin_ui_test/widget/textfield_widget.dart';
 
-//class
+//routes
 import '../routes/routes.dart';
 
 //statefulWidget 代表有狀態的widget
