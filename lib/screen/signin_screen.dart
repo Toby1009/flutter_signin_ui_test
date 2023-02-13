@@ -1,19 +1,16 @@
-import 'package:flutter/gestures.dart'; //手勢的包
+//pub
 import 'package:flutter/material.dart'; //material的包
-import 'package:flutter_signin_ui_test/screen/loading_screen.dart';
-import 'package:flutter_signin_ui_test/screen/register_screen.dart';
-
 import 'package:fluttertoast/fluttertoast.dart'; //吐司的包
 
 //引入客製化widget
 import 'package:flutter_signin_ui_test/widget/toast_widget.dart';
 import 'package:flutter_signin_ui_test/widget/button_widget.dart';
 import 'package:flutter_signin_ui_test/widget/textfield_widget.dart';
-import 'package:lottie/lottie.dart';
 
+//class
 import '../routes/routes.dart';
 
-//statfulWidget 代表有狀態的widget
+//statefulWidget 代表有狀態的widget
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
@@ -25,9 +22,6 @@ class _SignInScreenState extends State<SignInScreen> {
   //有controller 才能監控文字
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  //手勢
-  final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
 
   //flutter toast
   late FToast fToast;
@@ -44,7 +38,6 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _tapGestureRecognizer.dispose();
     super.dispose();
   }
 
