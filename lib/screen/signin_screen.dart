@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_ui_test/auth/auth_repository.dart';
 import 'package:flutter_signin_ui_test/auth/form_submission_status.dart';
 
-
 import 'package:fluttertoast/fluttertoast.dart'; //吐司的包
 
 //引入客製化widget
@@ -48,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  _signInSuccess() {
+  signInSuccess() {
     fToast.showToast(
       child: const ToastWidget(
           text: "Sign In Success",
@@ -85,14 +84,13 @@ class _SignInScreenState extends State<SignInScreen> {
       return BlocBuilder<SignInBloc, SignInState>(
         builder: (context, state) {
           return TextFormFieldWidget(
-            textEditingController: emailController,
-            hintText: "Email",
-            iconData: Icons.person,
-            validator: (value) =>
-                state.isValidEmail ? null : 'email is too short',
-            onChanged:(value) =>
-                context.read<SignInBloc>().add(SignInEmailChange(value))
-          );
+              textEditingController: emailController,
+              hintText: "Email",
+              iconData: Icons.person,
+              validator: (value) =>
+                  state.isValidEmail ? null : 'email is too short',
+              onChanged: (value) =>
+                  context.read<SignInBloc>().add(SignInEmailChange(value)));
         },
       );
     }
@@ -115,18 +113,21 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
     Widget signInButton() {
-      return BlocBuilder<SignInBloc, SignInState>(
-        builder: (context, state) {
-          return  InkWell(
-                  onTap: () {
-                    if(formKey.currentState!.validate()){
-                      context.read<SignInBloc>().add(SignInSubmitted());
-                      _signInSuccess();
-                    }
-                  },
-                  child: const ButtonWidget(text: "Sign In"));
-        },
-      );
+      return BlocConsumer<SignInBloc, SignInState>(
+          listener: (context, state) {
+            if(state.formStatus is SubmittionSuccess){
+              signInSuccess();
+            }
+          },
+          builder: (context, state) {
+            return InkWell(
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<SignInBloc>().add(SignInSubmitted());
+                  }
+                },
+                child: const ButtonWidget(text: "Sign In"));
+          });
     }
 
     Widget registerButton() {

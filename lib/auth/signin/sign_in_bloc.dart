@@ -21,18 +21,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }else if(event is SignInPasswordChange){
       password = event.password;
     }else if(event is SignInSubmitted){
-      emit(SignInState(
-          email: state.email,
-          password: state.password,
-          formStatus: FormSubmitting()));
+      formStatus = FormSubmitting();
       try{
         await authRepository?.signIn();
-        emit(SignInState(formStatus: SubmittionSuccess()));
+        formStatus = SubmittionSuccess();
       }on Exception catch(e){
-        emit(SignInState(
-            email: state.email,
-            password: state.password,
-            formStatus: SubmittionFailed(e)));
+        formStatus = SubmittionFailed(e);
       }
     }
     emit(getBlocState());
