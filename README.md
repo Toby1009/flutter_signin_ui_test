@@ -1,8 +1,7 @@
 # Flutter 登入頁面練習
 
 ## 成果
-
-![Sign In Flutter UI](https://user-images.githubusercontent.com/69885352/219367798-9794ac3a-0c1c-43c3-8f82-e898971fa6dc.mov)
+![Sign In Flutter UI](https://user-images.githubusercontent.com/69885352/219446092-3da7c59b-36ed-43b4-a75c-4160750ed18e.mov)
 
 
 
