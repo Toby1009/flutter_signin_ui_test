@@ -1,54 +1,62 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_signin_ui_test/utils/app_colors.dart';
+import '../utils/app_colors.dart';
 
-class TextFormFieldWidget extends StatelessWidget {
+class TextFormFieldWidget extends StatefulWidget {
   final TextEditingController textEditingController;
-
-  final IconData iconData;
-
-  final String hintText;
-
   final bool? obscureText;
-  const TextFormFieldWidget({Key? key,
+  final String hintText;
+  final IconData iconData;
+  final String? Function(String?)? validator;
+  final  Function(String)? onChanged;
+  const  TextFormFieldWidget({
+    Key? key,
     required this.textEditingController,
-    required this.hintText,
     this.obscureText=false,
-    required this.iconData}) : super(key: key);
+    required this.hintText,
+    required this.iconData,
+    this.validator,
+    this.onChanged,
 
+  }) : super(key: key);
+
+  @override
+  State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
+}
+
+class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        controller: textEditingController,
-        obscureText: obscureText!,
-        decoration: InputDecoration(
-          labelText: hintText,
-          hintText: hintText,
-          filled: true,
-          fillColor: AppColors.textHolder,
-            //正在用的texfield 的 border
-          prefixIcon: Icon(iconData,color: Colors.black,size: 18,),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-            //可用（還沒用到）的texfield 的 border
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          labelStyle: const TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-          floatingLabelStyle: const TextStyle(
-            color: Colors.black,
-            fontSize: 18.0,
-          ),
+      controller: widget.textEditingController,
+      obscureText: widget.obscureText!,
+      decoration: InputDecoration(
+        labelText: widget.hintText,
+        hintText: widget.hintText,
+        filled: true,
+        fillColor: AppColors.textHolder,
+//正在用的texfield 的 border
+        prefixIcon: Icon(widget.iconData,color: Colors.black,size: 18,),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-      validator: (value){
-        return null;
-      },
+//可用（還沒用到）的texfield 的 border
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        floatingLabelStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 18.0,
+        ),
+      ),
+      validator: widget.validator,
+      onChanged: widget.onChanged,
     );
   }
 }

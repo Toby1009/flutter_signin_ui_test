@@ -1,5 +1,10 @@
 //pub
 import 'package:flutter/material.dart'; //material的包
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_signin_ui_test/auth/auth_repository.dart';
+import 'package:flutter_signin_ui_test/auth/form_submission_status.dart';
+
+
 import 'package:fluttertoast/fluttertoast.dart'; //吐司的包
 
 //引入客製化widget
@@ -8,6 +13,8 @@ import 'package:flutter_signin_ui_test/widget/button_widget.dart';
 import 'package:flutter_signin_ui_test/widget/textFormfield_widget.dart';
 
 //routes
+
+import '../auth/signin/sign_in_bloc.dart';
 import '../routes/routes.dart';
 
 //statefulWidget 代表有狀態的widget
@@ -41,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  _notEmptyEmailPassword() {
+  _signInSuccess() {
     fToast.showToast(
       child: const ToastWidget(
           text: "Sign In Success",
@@ -50,32 +57,8 @@ class _SignInScreenState extends State<SignInScreen> {
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
     );
-    Navigator.pushNamed(context,Routes.loadingScreen);
+    Navigator.pushNamed(context, Routes.loadingScreen);
   }
-
-  _emptyEmailPassword() {
-    fToast.showToast(
-      child: const ToastWidget(
-          text: "Email or Password is Empty",
-          color: Colors.redAccent,
-          icon: Icons.error),
-      gravity: ToastGravity.BOTTOM,
-      toastDuration: const Duration(seconds: 2),
-    );
-  }
-
-  bool haveEmailPassword() {
-    // 用.text 獲取輸入的字串
-    final String email = emailController.text;
-    final String passwd = passwordController.text;
-    //email或password都不能為空
-    if (email.isEmpty || passwd.isEmpty) {
-      return false;
-    }
-    return true;
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,50 +66,70 @@ class _SignInScreenState extends State<SignInScreen> {
     final width = screenSize.width;
     final heigh = screenSize.height;
 
-    Widget imageWidget(){
-      return  Container(
+    final formKey = GlobalKey<FormState>();
+
+    Widget imageWidget() {
+      return Container(
         width: 100,
         height: 100,
         alignment: Alignment.center,
         decoration: const BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/apple.png'),
-            )),
+          fit: BoxFit.cover,
+          image: AssetImage('assets/apple.png'),
+        )),
       );
     }
 
-    Widget emailField(){
-      return TextFormFieldWidget(
-        textEditingController: emailController,
-        hintText: "Email",
-        iconData: Icons.person,
+    Widget emailField() {
+      return BlocBuilder<SignInBloc, SignInState>(
+        builder: (context, state) {
+          return TextFormFieldWidget(
+            textEditingController: emailController,
+            hintText: "Email",
+            iconData: Icons.person,
+            validator: (value) =>
+                state.isValidEmail ? null : 'email is too short',
+            onChanged:(value) =>
+                context.read<SignInBloc>().add(SignInEmailChange(value))
+          );
+        },
       );
     }
 
-    Widget passwordField(){
-      return  TextFormFieldWidget(
-        textEditingController: passwordController,
-        hintText: "Password",
-        obscureText: true,
-        iconData: Icons.key,
+    Widget passwordField() {
+      return BlocBuilder<SignInBloc, SignInState>(
+        builder: (context, state) {
+          return TextFormFieldWidget(
+            textEditingController: passwordController,
+            hintText: "Password",
+            obscureText: true,
+            iconData: Icons.key,
+            validator: (value) =>
+                state.isValidPassword ? null : 'password is too short',
+            onChanged: (value) =>
+                context.read<SignInBloc>().add(SignInPasswordChange(value)),
+          );
+        },
       );
     }
 
-    Widget signInButton(){
-      return InkWell(
-          onTap: (){
-            if (haveEmailPassword()) {
-              _notEmptyEmailPassword();
-            } else {
-              _emptyEmailPassword();
-            }
-          },
-          child: const ButtonWidget(text: "Sign In")
+    Widget signInButton() {
+      return BlocBuilder<SignInBloc, SignInState>(
+        builder: (context, state) {
+          return  InkWell(
+                  onTap: () {
+                    if(formKey.currentState!.validate()){
+                      context.read<SignInBloc>().add(SignInSubmitted());
+                      _signInSuccess();
+                    }
+                  },
+                  child: const ButtonWidget(text: "Sign In"));
+        },
       );
     }
 
-    Widget registerButton(){
+    Widget registerButton() {
       return TextButton(
         onPressed: () {
           Navigator.pushNamed(context, Routes.registerScreen);
@@ -140,8 +143,9 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     }
 
-    Widget signInForm(){
+    Widget signInForm() {
       return Form(
+        key: formKey,
         child: SafeArea(
           child: Container(
             //寬度最大
@@ -184,7 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   height: heigh / 90,
                 ),
-               passwordField(),
+                passwordField(),
                 SizedBox(
                   height: heigh / 90,
                 ),
@@ -214,7 +218,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
     return Scaffold(
       //防止超出大小
-      body: signInForm(),
+      body: BlocProvider(
+        create: (context) => SignInBloc(
+          authRepository: context.read<AuthRepository>(),
+        ),
+        child: signInForm(),
+      ),
     );
   }
 }

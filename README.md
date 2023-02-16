@@ -7,4 +7,6 @@
 
 ## 更新
 
-2/11/9:29 更新register、routes、loading
+2023/2/11/9:29 更新register、routes、loading
+
+2023/2/16/8:35 使用Bloc+TextFormField做登入
