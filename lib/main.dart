@@ -1,5 +1,7 @@
 //pub
 import 'package:flutter/material.dart';//import MaterialApp的包，使用material
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_signin_ui_test/auth/auth_repository.dart';
 import 'package:flutter_signin_ui_test/routes/routes.dart';
 
 //widget
@@ -25,7 +27,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //起始頁面
-      home: const SignInScreen() ,
+      home: RepositoryProvider(
+        create: (context)=> AuthRepository(),
+        child: const SignInScreen(),
+      ) ,
     );
   }
 }
