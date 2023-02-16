@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_signin_ui_test/utils/app_colors.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController textEditingController;
 
   final IconData iconData;
@@ -10,7 +10,7 @@ class TextFieldWidget extends StatelessWidget {
   final String hintText;
 
   final bool? obscureText;
-  const TextFieldWidget({Key? key,
+  const TextFormFieldWidget({Key? key,
     required this.textEditingController,
     required this.hintText,
     this.obscureText=false,
@@ -18,7 +18,7 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
         controller: textEditingController,
         obscureText: obscureText!,
         decoration: InputDecoration(
@@ -46,6 +46,9 @@ class TextFieldWidget extends StatelessWidget {
             fontSize: 18.0,
           ),
         ),
+      validator: (value){
+        return null;
+      },
     );
   }
 }
