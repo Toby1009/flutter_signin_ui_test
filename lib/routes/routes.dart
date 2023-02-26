@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_ui_test/screen/home_screen.dart';
 import 'package:flutter_signin_ui_test/screen/loading_screen.dart';
 import 'package:flutter_signin_ui_test/screen/register_screen.dart';
+import 'package:flutter_signin_ui_test/screen/signin_screen.dart';
 
 //路
 class Routes{
@@ -11,17 +12,20 @@ class Routes{
   static const String homeScreen = 'homeScreen';
   static const String loadingScreen = 'loadingScreen';
   static const String testScreen = 'testScreen';
+  static const String signInScreen = 'signInScreen';
 }
 //路由器
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.registerScreen:
-        return MaterialPageRoute(builder: (_)=>const RegisterScreen());
+        return NoAnimRouteBuilder(const RegisterScreen());
       case Routes.homeScreen:
         return NoAnimRouteBuilder(const HomeScreen());
       case Routes.loadingScreen:
         return NoAnimRouteBuilder(const LoadingScreen());
+      case Routes.signInScreen:
+        return NoAnimRouteBuilder(const SignInScreen());
       default:
         return CupertinoPageRoute(
             builder: (_) => Scaffold(

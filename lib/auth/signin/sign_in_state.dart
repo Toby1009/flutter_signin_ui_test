@@ -1,7 +1,7 @@
-part of 'sign_in_bloc.dart';
+part of 'sign_in_cubit.dart';
 
 class SignInState {
-  late final String email;
+  final String email;
 
   bool get isValidEmail => email.length > 3;
   final String password;
@@ -26,8 +26,4 @@ class SignInState {
       formStatus:  formStatus,
     );
   }
-  setEmail(String email){
-    this.email = email;
-  }
-
 }

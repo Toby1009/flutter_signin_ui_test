@@ -1,8 +1,9 @@
 //pub
 import 'package:flutter/material.dart';//import MaterialApp的包，使用material
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_signin_ui_test/auth/auth_repository.dart';
+import 'package:flutter_signin_ui_test/auth/auth_repositories/repository.dart';
 import 'package:flutter_signin_ui_test/routes/routes.dart';
+import 'package:flutter_signin_ui_test/screen/register_screen.dart';
 
 //widget
 import 'package:flutter_signin_ui_test/screen/signin_screen.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //MaterialApp 是Material Design 風格的Widget
+
     return MaterialApp(
       title: 'Flutter Demo',
       //關掉debug圖標

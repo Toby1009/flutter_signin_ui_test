@@ -1,8 +1,9 @@
 //pub
 import 'package:flutter/material.dart'; //material的包
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_signin_ui_test/auth/auth_repository.dart';
+import 'package:flutter_signin_ui_test/auth/auth_repositories/repository.dart';
 import 'package:flutter_signin_ui_test/auth/form_submission_status.dart';
+import 'package:flutter_signin_ui_test/auth/signin/sign_in_cubit.dart';
 
 import 'package:fluttertoast/fluttertoast.dart'; //吐司的包
 
@@ -67,6 +68,26 @@ class _SignInScreenState extends State<SignInScreen> {
 
     final formKey = GlobalKey<FormState>();
 
+    Widget mainHeadline(){
+      return const Text(
+        'Hello World',
+        style: TextStyle(
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+
+    Widget subHeadline(){
+      return const Text(
+        'We are very missing you',
+        style: TextStyle(
+          fontSize: 20,
+          color: Colors.grey,
+        ),
+      );
+    }
+
     Widget imageWidget() {
       return Container(
         width: 100,
@@ -81,49 +102,51 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
     Widget emailField() {
-      return BlocBuilder<SignInBloc, SignInState>(
+      return BlocBuilder<SignInCubit, SignInState>(
         builder: (context, state) {
           return TextFormFieldWidget(
               textEditingController: emailController,
               hintText: "Email",
               iconData: Icons.person,
-              validator: (value) =>
+              validator: (email) =>
                   state.isValidEmail ? null : 'email is too short',
-              onChanged: (value) =>
-                  context.read<SignInBloc>().add(SignInEmailChange(value)));
+              onChanged: (email) =>
+                  context.read<SignInCubit>().onEmailChange(email),
+          );
         },
       );
     }
 
     Widget passwordField() {
-      return BlocBuilder<SignInBloc, SignInState>(
+      return BlocBuilder<SignInCubit, SignInState>(
         builder: (context, state) {
           return TextFormFieldWidget(
             textEditingController: passwordController,
             hintText: "Password",
             obscureText: true,
             iconData: Icons.key,
-            validator: (value) =>
+            validator: (password) =>
                 state.isValidPassword ? null : 'password is too short',
-            onChanged: (value) =>
-                context.read<SignInBloc>().add(SignInPasswordChange(value)),
+            onChanged: (password) =>
+                context.read<SignInCubit>().onPasswordChange(password),
           );
         },
       );
     }
 
     Widget signInButton() {
-      return BlocConsumer<SignInBloc, SignInState>(
+      return BlocConsumer<SignInCubit, SignInState>(
           listener: (context, state) {
             if(state.formStatus is SubmittionSuccess){
               signInSuccess();
+            }else if (state.formStatus is SubmittionFailed){
             }
           },
           builder: (context, state) {
             return InkWell(
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    context.read<SignInBloc>().add(SignInSubmitted());
+                    context.read<SignInCubit>().onSubmitted();
                   }
                 },
                 child: const ButtonWidget(text: "Sign In"));
@@ -168,20 +191,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   height: heigh / 14,
                 ),
-                const Text(
-                  'Hello World',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Text(
-                  'We are very missing you',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                  ),
-                ),
+                mainHeadline(),
+                subHeadline(),
                 SizedBox(
                   height: heigh / 20,
                 ),
@@ -220,8 +231,8 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       //防止超出大小
       body: BlocProvider(
-        create: (context) => SignInBloc(
-          authRepository: context.read<AuthRepository>(),
+        create: (context) => SignInCubit(
+          AuthRepository(),
         ),
         child: signInForm(),
       ),
