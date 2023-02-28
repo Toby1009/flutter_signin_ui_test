@@ -195,8 +195,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     return Scaffold(
-      body: BlocProvider(
-        create: (_) => RegisterCubit(AuthRepository()),
+      body: BlocProvider<RegisterCubit>(
+        create: (_) => RegisterCubit(context.read<AuthRepository>()),
         child: registerForm(),
       ),
     );

@@ -68,7 +68,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     final formKey = GlobalKey<FormState>();
 
-    Widget mainHeadline(){
+    Widget mainHeadline() {
       return const Text(
         'Hello World',
         style: TextStyle(
@@ -78,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     }
 
-    Widget subHeadline(){
+    Widget subHeadline() {
       return const Text(
         'We are very missing you',
         style: TextStyle(
@@ -105,13 +105,13 @@ class _SignInScreenState extends State<SignInScreen> {
       return BlocBuilder<SignInCubit, SignInState>(
         builder: (context, state) {
           return TextFormFieldWidget(
-              textEditingController: emailController,
-              hintText: "Email",
-              iconData: Icons.person,
-              validator: (email) =>
-                  state.isValidEmail ? null : 'email is too short',
-              onChanged: (email) =>
-                  context.read<SignInCubit>().onEmailChange(email),
+            textEditingController: emailController,
+            hintText: "Email",
+            iconData: Icons.person,
+            validator: (email) =>
+                state.isValidEmail ? null : 'email is too short',
+            onChanged: (email) =>
+                context.read<SignInCubit>().onEmailChange(email),
           );
         },
       );
@@ -135,22 +135,19 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
     Widget signInButton() {
-      return BlocConsumer<SignInCubit, SignInState>(
-          listener: (context, state) {
-            if(state.formStatus is SubmittionSuccess){
-              signInSuccess();
-            }else if (state.formStatus is SubmittionFailed){
-            }
-          },
-          builder: (context, state) {
-            return InkWell(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    context.read<SignInCubit>().onSubmitted();
-                  }
-                },
-                child: const ButtonWidget(text: "Sign In"));
-          });
+      return BlocConsumer<SignInCubit, SignInState>(listener: (context, state) {
+        if (state.formStatus is SubmittionSuccess) {
+          signInSuccess();
+        } else if (state.formStatus is SubmittionFailed) {}
+      }, builder: (context, state) {
+        return InkWell(
+            onTap: () async {
+              if (formKey.currentState!.validate()) {
+                await context.read<SignInCubit>().onSubmitted();
+              }
+            },
+            child: const ButtonWidget(text: "Sign In"));
+      });
     }
 
     Widget registerButton() {
@@ -232,7 +229,7 @@ class _SignInScreenState extends State<SignInScreen> {
       //防止超出大小
       body: BlocProvider(
         create: (context) => SignInCubit(
-          AuthRepository(),
+          context.read<AuthRepository>(),
         ),
         child: signInForm(),
       ),

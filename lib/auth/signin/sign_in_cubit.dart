@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_signin_ui_test/auth/app/bloc/app_bloc.dart';
 import 'package:flutter_signin_ui_test/auth/signin/sign_in_bloc.dart';
 
 import '../auth_repositories/repository.dart';
@@ -12,7 +13,6 @@ class SignInCubit extends Cubit<SignInState>{
   String email = '';
   String password ='';
   FormSubmissionStatus formStatus = const InititalFormStatus();
-
 
   void onEmailChange(String value){
     email = value;

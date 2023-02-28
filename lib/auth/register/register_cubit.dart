@@ -36,9 +36,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     int registerAccount = await _authRepository.register(userModel);
     if(registerAccount>=1){
       formStatus = SubmittionSuccess();
-      print("ss");
     }else{
-      print("ff");
       formStatus = SubmittionFailed();
     }
     emit(getCubitState());
